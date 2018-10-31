@@ -1,0 +1,61 @@
+3673 plane Pinsk 12.45 23.32
+2345 car Pinsk 09.45 23.56
+6784 bus Pinsk 04.15 21.12
+3643 train Pinsk 13.16 17.32
+9789 minibus Pinsk 07.59 20.32
+1947 plane Bonn 08.45 19.34
+1944 car Bonn 06.45 23.56
+9139 bus Bonn 04.15 17.12
+2038 train Bonn 03.16 13.32
+2201 minibus Bonn 11.59 15.32
+1947 plane London 10.45 12.32
+1944 car London 09.45 13.56
+9139 bus London 05.15 11.12
+2038 train London 13.16 17.32
+2201 minibus London 06.59 21.32
+1947 plane New York 11.45 23.32
+1944 car New York 09.45 15.56
+9139 bus New York 14.15 17.12
+2038 train New York 01.16 11.32
+2201 minibus New York 02.59 22.52
+1947 plane Paris 05.45 23.32
+1944 car Paris 03.45 13.56
+9139 bus Paris 04.15 11.12
+2038 train Paris 15.16 17.32
+2201 minibus Paris 17.59 19.32
+
+1111 car Madrid 12.34 17.45
+1234 bus Madrid 12.34 18.45
+
+1567 plane Madrid 09.23 22.12
+
+7647 car Berlin 12.45 19.56
+
+3469 plane Berlin 07.34 14.34
+
+7434 bus Berlin 06.23 16.45
+
+1234 plane Los Angeles 11.34 22.45
+
+8645 car Minsk 12.45 22.56
+
+1212 plane Berlin 09.12 17.34
+4673 minibus Minsk 12.00 16.00
+
+1238 car Los Angeles 06.12 19.45
+
+8754 bus Moscow 03.22 19.45
+
+6443 plane Moscow 03.15 15.34
+
+6532 car Madrid 03.34 16.45
+
+6453 plane Polotsk 09.13 17.56
+
+6553 car Saint Petersburg 02.34 19.45 
+
+3567 car Pinsk 12.00 16.00
+
+3773 plane Saint Petersburg 04.56 15.23
+
+3746 bus Saint Petersburg 04.56 19.34

@@ -1,0 +1,7 @@
+car, 3.00, 24, from 2 to 5 y.o.
+helicopter, 7.34, 12, from 3 to 19 y.o.
+barbie, 12.98, 6, from 3 to 12 y.o.
+puzzle "kitty", 8.12, 45, from 3 to 5 y.o.
+kitty, 4.56, 35, from 1 to 6 y.o.
+lego, 17.89, 8, from 1 to 12 y.o.
+mortal kombat, 22.45, 2, from 1 to 45 y.o.
