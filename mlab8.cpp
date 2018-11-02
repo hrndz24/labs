@@ -185,10 +185,10 @@ char** sortBySalary(char **students, int length) {
 
 int enterCode() {
 	int code;
-	puts(" Создание - 1");
-	puts(" Просмотр - 2");
-	puts(" Добавление - 3");
-	puts(" Выход - 0");
+	puts(" Create file - 1");
+	puts(" Sort students -2");
+	puts(" Add a student -3");
+	puts(" Exit - 0");
 	scanf("%d", &code);
 	return code;
 }
@@ -197,15 +197,11 @@ int main() {
 	setlocale(LC_ALL, "Rus");
 	while (1) {
 		int code = enterCode();
-		//смещает курсор (считывания) в конец, чтобы не запоминал 
-		// введённые до этого значения
 		fseek(stdin, 0, SEEK_END);
 		switch (code) {
 		case 0:
 			return 0;
 		case 1:
-			// создаёт новый файл(ни за что не меняй это имя на существующий
-			// файл, иначе он сотрёт там всю инфу)
 			FILE *f1;
 			f1 = fopen("e:\\work\\new_students.txt", "w + b");
 			printf("\nA new file was created in e:\\\\work");
@@ -217,11 +213,8 @@ int main() {
 			char s[256];
 			printf("Enter a student in a format 'Name Group GPA salary': ");
 			fgets(s, 256, stdin);
-			// ставит конец строки, я не знаю, почему -1
-			// методом проб и ошибок конец должен быть там
+			// for a reason it should be here
 			s[strlen(s)-1] = '\0';
-			// \r r значит, что он обрабатывает дальше символы 
-			// иначе он бы в файл записал \n...
 			fprintf(f3, "\r\n%s", s);
 			fclose(f3);
 			break;
@@ -264,6 +257,6 @@ int main() {
 			// sorts the array with the rich by GPA 
 			sortByGPA(students, divider, length);
 			fclose(f2);
-		} // Конец Switch 2
-	} // Конец While(1) 
-} // Конец программы
+		}
+	}  
+} 
