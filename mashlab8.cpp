@@ -3,14 +3,13 @@
 #include <string.h>
 #include <conio.h>
 #include <locale.h>
-
 #include <windows.h>
 #include <winuser.h>
 
 int enterCode() {
 	int code;
-	printf("What do you want to do: \n");
-	printf("Exit - 0 \n");
+	printf("\nWhat do you want to do: \n");
+	printf("\nExit - 0 \n");
 	printf("Create new file - 1 \n");
 	printf("Students with debt - 2 \n");
 	printf("GPA of group - 3 \n");
@@ -24,7 +23,7 @@ int enterCode() {
 void createFile() {
 	FILE *f1;
 	f1 = fopen("e:\\work\\new_session.txt", "w + b");
-	printf("\nA new session file was created in e:\\\\work");
+	printf("\nA new session file was created in e:\\\\work\n");
 	fclose(f1);
 }
 
@@ -49,13 +48,11 @@ char* cutPieceFromLine(char *line, int start, int end) {
 }
 
 bool isGoodMark(char mark[2]) {
-	// if the mark has two digits
+
 	if (strlen(mark) == 2) {
 		return true;
-	}
-	// if the mark has one digit
-	else if (strlen(mark) == 1) {
-		// 53 is number of int 5 in ASCII
+	} else if (strlen(mark) == 1) {
+		// 52 is number of int 4 in ASCII
 		if ((int)mark[0] < 52) {			
 			return false;
 		}
@@ -64,7 +61,6 @@ bool isGoodMark(char mark[2]) {
 		}
 	}
 	else {
-		//printf("Invalid mark was found");
 		return false;
 	}
 }
@@ -94,7 +90,7 @@ int findStartMark(char *line, int searchFrom) {
 int findEndMark(char *line, int searchFrom) {
 	int endMark = 0;
 	for (int i = searchFrom; i < strlen(line); i++) {
-		if ((int)line[i] == 32 || (int)line[i] == 13 || (int)line[i] == 0) {
+		if ((int)line[i] == 32) {
 			endMark = i;
 			break;
 		}
@@ -108,7 +104,7 @@ int findEndMark(char *line, int searchFrom) {
 
 int findEndName(char *line) {
 	int endName = 0;
-	// searches after the group number
+	// searches after position where group number ends
 	for (int i = 8; i < strlen(line); i++) {
 		if ((int)line[i] == 32) {
 			endName = i;
@@ -118,50 +114,76 @@ int findEndName(char *line) {
 	return endName;
 }
 
-void checkStudent() {
+//searches for the 7th space
+int findEndOfExamMarks(char *student) {
+	int endOfExamMarks = 0, count = 0;
+	for (int i = 0; i < strlen(student); i++) {
+		if ((int)student[i] == 32) {
+			count += 1;
+		}
+		if (count == 7) {
+			endOfExamMarks = i;
+			break;
+		}
+	}
+	return endOfExamMarks;
+}
+
+int findExamDebtOfStudent(char *student) {
+	int debt = 0;
+	// the char where name begins
+	int endMark = 8;
+	for (int i = 0; i < 5; i++) {
+
+		int startMark = findStartMark(student, endMark);
+		endMark = findEndMark(student, startMark);
+		char *mark = cutPieceFromLine(student, startMark, endMark);
+
+		if (!(isGoodMark(mark))) {
+			debt += 1;
+		}
+	}
+	return debt;
+}
+
+int findZachDebtOfStudent(char *student) {
+	int endZachyot = findEndOfExamMarks(student), debt = 0;
+	for (int i = 0; i < 5; i++) {
+
+		int startZachyot = findStartMark(student, endZachyot);
+		endZachyot = findEndMark(student, startZachyot);
+		char *zachyot = cutPieceFromLine(student, startZachyot, endZachyot);
+
+		if (!(isZachyot(zachyot))) {
+			debt += 1;
+		}
+	}
+	return debt;
+}
+
+void checkStudent(char *student) {
+	int debt = findExamDebtOfStudent(student);
+	debt += findZachDebtOfStudent(student);
+	if (debt) {
+		int endName = findEndName(student);
+		char *nameAndGroup = cutPieceFromLine(student, 0, endName);
+		if (strlen(nameAndGroup) != 0) {
+			printf("%s %i\n", nameAndGroup, debt);
+		}
+	}
+}
+
+void checkStudents() {
 	FILE *f2;
 	if (!(f2 = fopen("e:\\work\\session.txt", "r + b")))
 	{
 		puts("\n Файл не создан!");
 		return;
 	}
-	char line[356];
-	while (fgets(line, sizeof(line), f2) != NULL){
-		
-		int debt = 0;
-		// the char where name begins
-		int endMark = 8;
-		for (int i = 0; i < 5; i++) {
-			
-			int startMark = findStartMark(line, endMark);
-			endMark = findEndMark(line, startMark);
-			char *mark = cutPieceFromLine(line, startMark, endMark);
-			
-			if (!(isGoodMark(mark))) {
-				debt += 1;
-			}
-		}
-		// sets the value to be the index of space after the last mark
-		int endZachyot = endMark;;
-		for (int i = 0; i < 5; i++) {
+	char student[356];
+	while (fgets(student, sizeof(student), f2) != NULL){
 
-			int startZachyot = findStartMark(line, endZachyot);
-			endZachyot = findEndMark(line, startZachyot);
-			char *zachyot = cutPieceFromLine(line, startZachyot, endZachyot);
-			//printf("%i %i %s\n", startZachyot, endZachyot, zachyot);
-			if (!(isZachyot(zachyot))) {
-				debt += 1;
-				//printf("zach No %i is '%s' debt = %i ", i, zachyot, debt);
-			}
-		}
-		// if debt is not = 0
-		if (debt) {
-			int endName = findEndName(line);
-			char *nameAndGroup = cutPieceFromLine(line, 0, endName);
-			if (nameAndGroup != NULL) {
-				printf("%s %i\n", nameAndGroup, debt);
-			}
-		}
+		checkStudent(student);
 	}
 	fclose(f2);
 }
@@ -175,11 +197,13 @@ double findGPA(char *student) {
 		endMark = findEndMark(student, startMark);
 		char *mark = cutPieceFromLine(student, startMark, endMark);
 		int markDigital;
+		//converts array into a number
 		sscanf(mark, "%d", &markDigital);
-		//printf("mark = %d ", markDigital);
 		marksSum += markDigital;
 	}
 	double GPA = marksSum / 5.0;
+	char *name = cutPieceFromLine(student, 7, findEndName(student));
+	printf("\n%s GPA = %2.2lf", name, GPA);
 	return GPA;
 }
 
@@ -192,26 +216,21 @@ void calculateGroupGPA(char *group_needed) {
 	}
 	char student[356];
 	double groupGPA = 0;
-	int count = 0;
+	int studentsCount = 0;
 	while (fgets(student, sizeof(student), f2) != NULL) {
 		char *group = cutPieceFromLine(student, 0, 6);
 		if (strcmp(group, group_needed)==0) {
 			
-			double GPA = findGPA(student);
-			int endName = findEndName(student);
-			char *name = cutPieceFromLine(student, 7, endName);
-			count += 1;
-			groupGPA += GPA;
-			printf("%s GPA = %2.2lf\n", name, GPA);
-			
+			studentsCount += 1;
+			groupGPA += findGPA(student);
 		}
 	}
-	if (count != 0) {
-		groupGPA /= count;
-		printf("Group GPA = %2.2lf\n", groupGPA);
+	if (studentsCount != 0) {
+		groupGPA /= studentsCount;
+		printf("\n\nGroup GPA = %2.2lf\n", groupGPA);
 	}
 	else {
-		printf("Group wasn't found!\n");
+		printf("\nGroup wasn't found!\n");
 	}
 	fclose(f2);
 }
@@ -234,8 +253,8 @@ int main() {
 			addStudent();
 			break;
 		case 2:
-			printf("Students with debt:\n");
-			checkStudent();
+			printf("\nStudents with debt:\n");
+			checkStudents();
 			break;
 		case 3:
 			char group_needed[7];
