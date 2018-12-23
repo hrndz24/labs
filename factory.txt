@@ -1,0 +1,6 @@
+Newton 2404 10 11 12
+Leibnitz 1123 23 24 23
+Lemesh 2702 27 34 21
+Gogol 2702 19 23 17
+Pushkin 1123 24 24 24
+Fibbonachi 1123 5 8 13
